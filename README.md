@@ -2,7 +2,10 @@
 
 基于 LangGraph 的多模态传感器智能体，提供实时模态选择与回退、中文规划进度、完整视图、Markdown 回复，以及浏览器 ASR / TTS。
 
-公开版基于 TaskSense Reconstruct 项目整理。源代码与示例工具目录包含在仓库中，首次使用需填写模型接口、模型名称及 Cohere API 密钥。真实传感器数据与模型权重需自行配置。
+![alt text](assets/overall.png)
+
+
+源代码与示例工具目录包含在仓库中，首次使用需填写模型接口、模型名称及 Cohere API 密钥。真实传感器数据与模型权重需自行配置。
 
 ```bash
 git clone https://github.com/Tcatqwq/Senor-Agent.git
@@ -194,11 +197,3 @@ python cli.py --query "Did anyone show aggressive behaviors on 2023.11.16?"
 python cli.py   # 交互模式，输入 exit 退出
 ```
 ---
-
-## Example
-
-![Response for Example 2](assets/query.png)
-
-![Response for Example 2](assets/sys.png)
-
-![Response for Example 2](assets/response.png)
