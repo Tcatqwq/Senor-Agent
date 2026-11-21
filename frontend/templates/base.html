@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Senor Agent{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset_url('css/app.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  {% block head %}{% endblock %}
+</head>
+<body data-page="{{ page }}" data-workspace="{{ workspace|default('main') }}">
+  <header class="topbar">
+    <a class="brand" href="/" data-workspace="main">
+      <span class="brand-mark" aria-hidden="true">SA</span>
+      <strong>Senor Agent</strong>
+    </a>
+    <nav class="top-actions">
+      <div class="segmented" id="view-toggle" role="tablist" aria-label="界面模式">
+        <button type="button" class="seg on" data-view="user">用户界面</button>
+        <button type="button" class="seg" data-view="modality">模态流图</button>
+        <button type="button" class="seg" data-view="debug">系统调试</button>
+      </div>
+      <label class="full-view-control" for="full-view-toggle">
+        <input type="checkbox" role="switch" id="full-view-toggle" aria-controls="view-user view-modality view-debug">
+        <span class="switch-track" aria-hidden="true"></span>
+        <span>完整视图模式</span>
+      </label>
+      <button type="button" class="btn" id="btn-settings">参数设置</button>
+      <span class="stage-pill" id="virtual-pill" hidden>LLM虚拟环境</span>
+      <a class="btn primary" id="btn-workspace-browse" href="/browse" data-workspace="browse">资源浏览</a>
+      <a class="btn" id="btn-workspace-main" href="/" data-workspace="main">返回主界面</a>
+    </nav>
+  </header>
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

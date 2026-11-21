@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+<section id="view-user" class="view on" aria-label="用户界面">
+  <h2 class="full-view-heading">用户界面</h2>
+  <div id="planning-announcement" class="full-view-only planning-announcement" role="status"></div>
+  <div class="user-layout">
+    <div class="user-stream" id="user-stream">
+      <div class="empty-hint" id="user-empty">
+        输入一条请求后，这里会显示规划结果与最终回复。
+      </div>
+    </div>
+    <form class="composer" id="run-form">
+      <div class="composer-meta">
+        <span class="stage-pill" id="user-stage">就绪</span>
+        <label class="check">
+          <input type="checkbox" id="tick-loop">
+          tick-loop（wait 后自动续跑）
+        </label>
+      </div>
+      <textarea id="query-input" rows="3" placeholder="例如：Did anyone show aggressive behaviors on 2023.11.16?" required></textarea>
+      <div class="voice-input-controls">
+        <button type="button" class="btn" id="btn-voice-input" aria-pressed="false" aria-controls="query-input">语音输入</button>
+        <label for="voice-language">识别语言
+          <select id="voice-language">
+            <option value="zh-CN">中文</option>
+            <option value="en-US">English</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="voice-auto-read">自动朗读新回复</label>
+      </div>
+      <p class="voice-status" id="voice-input-status" role="status"></p>
+      <div class="composer-actions">
+        <button type="button" class="btn danger" id="btn-stop" disabled>终止任务</button>
+        <button type="submit" class="btn primary" id="btn-run">提交</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="view-modality" class="view" aria-labelledby="modality-title">
+  <article class="panel modality-panel">
+    <header class="panel-h modality-header">
+      <h2 id="modality-title">模态调用与切换</h2>
+      <div class="segmented" aria-label="图的数据来源">
+        <button type="button" class="seg on" data-modality-source="live" aria-pressed="true">本次运行</button>
+        <button type="button" class="seg" data-modality-source="demo" aria-pressed="false">Demo 1 日志</button>
+      </div>
+    </header>
+    <div class="modality-body">
+      <div class="modality-meta">
+        <p id="modality-caption" class="muted"></p>
+        <label id="modality-round-label" hidden>规划轮次 <select id="modality-round"></select></label>
+      </div>
+      <p id="modality-empty" class="empty-hint" role="status">提交查询后，图上会显示已执行的模态调用。</p>
+      <div id="modality-legend" class="modality-legend" hidden></div>
+      <div id="modality-scroll" class="modality-scroll" tabindex="0" aria-label="按时间排列的模态关系图" hidden>
+        <div id="modality-board" class="modality-board"></div>
+      </div>
+      <div id="modality-detail" class="modality-detail" aria-live="polite" hidden></div>
+    </div>
+  </article>
+</section>
+
+<section id="view-debug" class="view" aria-label="系统调试">
+  <h2 class="full-view-heading">系统调试</h2>
+  <div class="debug-layout">
+    <article class="panel">
+      <header class="panel-h">
+        <h2>有限状态机</h2>
+        <span class="muted" id="fsm-caption">尚未开始</span>
+      </header>
+      <div class="fsm-wrap" id="fsm-wrap">
+        <div class="fsm-diagram" id="fsm-diagram"></div>
+      </div>
+      <div class="observe-options" id="observe-options"></div>
+    </article>
+    <div class="debug-side">
+      <article class="panel">
+        <header class="panel-h">
+          <h2>完整输出</h2>
+        </header>
+        <pre class="log" id="debug-log"></pre>
+      </article>
+      <article class="panel">
+        <header class="panel-h">
+          <h2>状态摘要</h2>
+        </header>
+        <pre class="log json" id="debug-state">{}</pre>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% include "_browse_section.html" %}
+
+<dialog class="modal" id="settings-modal">
+  <div class="modal-card" id="settings-form">
+    <header class="modal-h">
+      <h2>参数设置</h2>
+      <button type="button" class="icon-x" id="btn-close-settings" aria-label="关闭">×</button>
+    </header>
+    <p class="hint" id="settings-hint"></p>
+    <div class="tabs" id="settings-tabs">
+      <button type="button" class="tab on" data-pane="api">API</button>
+      <button type="button" class="tab" data-pane="graph">Graph</button>
+      <button type="button" class="tab" data-pane="exec">Execution</button>
+      <button type="button" class="tab" data-pane="virtual">LLM虚拟环境</button>
+    </div>
+    <div class="pane on" data-pane="api" id="pane-api"></div>
+    <div class="pane" data-pane="graph" id="pane-graph"></div>
+    <div class="pane" data-pane="exec" id="pane-exec"></div>
+    <div class="pane" data-pane="virtual" id="pane-virtual"></div>
+    <footer class="modal-f">
+      <p class="status" id="settings-status"></p>
+      <button type="button" class="btn primary" id="btn-save-settings">保存</button>
+    </footer>
+  </div>
+</dialog>
+{% endblock %}
+{% block scripts %}
+<script src="{{ asset_url('js/fsm.js') }}"></script>
+<script src="{{ asset_url('js/modality-flow.js') }}"></script>
+<script src="{{ asset_url('vendor/marked.umd.js') }}"></script>
+<script src="{{ asset_url('js/response-markdown.js') }}"></script>
+<script src="{{ asset_url('js/planning-progress.js') }}"></script>
+<script src="{{ asset_url('js/voice.js') }}"></script>
+<script src="{{ asset_url('js/app.js') }}"></script>
+<script src="{{ asset_url('js/browse.js') }}"></script>
+{% endblock %}

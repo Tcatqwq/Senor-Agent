@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}资源浏览 · Senor Agent{% endblock %}
+{% block content %}
+{% include "_browse_section.html" %}
+{% endblock %}
+{% block scripts %}
+<script src="{{ asset_url('js/browse.js') }}"></script>
+{% endblock %}

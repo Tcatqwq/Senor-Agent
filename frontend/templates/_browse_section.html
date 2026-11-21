@@ -1,0 +1,41 @@
+<section id="view-browse" class="view-browse" {% if workspace is defined and workspace != "browse" %}hidden{% endif %}>
+  <header class="browse-h">
+    <div>
+      <h1 id="browse-title">资源浏览</h1>
+      <p class="muted" id="browse-subtitle">按模态与时间查看传感器数据、执行缓存、中间结果，以及可用工具与模型。</p>
+    </div>
+    <div class="browse-controls">
+      <div class="segmented" role="tablist" aria-label="浏览模式">
+        <button type="button" class="seg on" data-browse-mode="real">真实数据</button>
+        <button type="button" class="seg" data-browse-mode="virtual">LLM虚拟环境</button>
+      </div>
+      <div class="filters" id="real-filters">
+        <label>模态
+          <select id="filter-modality">
+            <option value="">全部</option>
+          </select>
+        </label>
+        <label>日期
+          <select id="filter-date">
+            <option value="">全部</option>
+          </select>
+        </label>
+        <label id="tool-filter-wrap">缓存工具
+          <select id="filter-tool">
+            <option value="">全部</option>
+          </select>
+        </label>
+        <label class="check" id="real-use-cache-wrap">
+          <input type="checkbox" id="real-use-cache"> 使用执行 cache
+        </label>
+      </div>
+    </div>
+  </header>
+  <div class="tabs" id="browse-tabs">
+    <button type="button" class="tab on" data-tab="sensor">传感器数据</button>
+    <button type="button" class="tab" data-tab="cache">执行缓存</button>
+    <button type="button" class="tab" data-tab="intermediate">中间结果</button>
+    <button type="button" class="tab" data-tab="tools">工具与模型</button>
+  </div>
+  <div id="browse-body" class="browse-body">加载中…</div>
+</section>
